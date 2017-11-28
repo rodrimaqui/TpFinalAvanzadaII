@@ -64,7 +64,6 @@
         this.loading = true;
         this.$http.get('http://ergast.com/api/f1/circuits.json?limit=73')
         .then((response) => {
-          console.log(response);
           this.circuits = response.data.MRData.CircuitTable.Circuits;
           this.loading = false;
         })
