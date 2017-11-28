@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <header>
      <b-navbar toggleable type="light" variant="light">

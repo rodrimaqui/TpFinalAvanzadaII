@@ -101,7 +101,6 @@
     mounted(){
       this.name = this.$store.getters.getName(this.getSeason,this.getStage,this.getPosition);
       this.searchPhotografy(this.name);
-      //this.results = this.$store.getters.getOneResult(this.getSeason,this.getStage,this.getPosition);
     }
   }
 </script>

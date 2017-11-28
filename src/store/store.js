@@ -8,17 +8,15 @@ export default new Vuex.Store({
 
     state:{
       driverResult: [],
+      name:''
     },
     getters:{
 
       getOneResult: (state, getters) => (season,stage,position) => {
-        const aa = state.driverResult.filter(n =>  n.season == season && n.stage == stage && n.position == position);
-        //console.log(aa);
-        return  aa;
+        return  state.driverResult.filter(n =>  n.season == season && n.stage == stage && n.position == position);
       },
       getName:(state, getters) => (season,stage,position) => {
         const aa = state.driverResult.filter(n =>  n.season == season && n.stage == stage && n.position == position);
-        //console.log(aa);
         return  aa[0].driverSurename;
       }
     },
@@ -26,10 +24,10 @@ export default new Vuex.Store({
       addResultDriver(state,resultDriver){
         state.driverResult = resultDriver;
       },
+      saveNameChat(state,name){
+          state.name = name;
+      }
 
 
     }
 });
-/* mutations son los metodos   se llama con comiut
-state, es la data   se llama con .state
-getters computed se llama .getters*/

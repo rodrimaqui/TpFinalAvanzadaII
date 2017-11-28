@@ -10,7 +10,7 @@ import rmLapsTimes from '../components/rm-lapsTimes.vue'
 import rmDrivers from '../components/rm-drivers.vue';
 import rmStandings from '../components/rm-standings.vue';
 import rmDetailResult from '../components/rm-detailResult.vue';
-import rmAllNews from '../components/rm-allNews.vue';
+import rmIndex from '../components/rm-index.vue';
 import rmChat from '../components/rm-chat.vue';
 Vue.use(Router)
 
@@ -23,7 +23,7 @@ export default new Router({
     {path: '/circuits', component: rmCircuits},
     {path: '/lapsTimes', component: rmLapsTimes},
     {path: '/pitStop', component: rmPitStop},
-    {path: '/', component: rmAllNews},
+    {path: '/', component: rmIndex},
     {path: '/chat', component: rmChat},
     {path: '/results', component: rmResults},
     {path: '/drivers', component: rmDrivers},

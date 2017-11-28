@@ -6,7 +6,6 @@
       <b-col cols="8">
         <br>
         <rm-cousel></rm-cousel>
-
       </b-col>
       <b-col>
       </b-col>
@@ -24,7 +23,7 @@
   import rmCar from './rm-car.vue';
 import rmCousel from './rm-cousel.vue';
   export default{
-    name: 'rmAllNews',
+    name: 'rmIndex',
     components:{
       rmCar,
       rmCousel

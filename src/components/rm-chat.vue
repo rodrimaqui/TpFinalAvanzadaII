@@ -23,11 +23,13 @@
               </div>
               <br>
               <b-form-input id="exampleInput1"
+                          class='rmWidth'
                           type="text"
                           v-model="message.message"
                           placeholder='Add comment'
                           @keyup.enter="sendMessage"
               ></b-form-input>
+              <br>
               <b-button type="submit"  variant="primary" @click='sendMessage'>Send message</b-button>
             </b-col>
     </b-row>
@@ -57,6 +59,7 @@
     methods:{
       setNick(){
         this.nickB = true;
+        this.$store.commit('saveNameChat',this.nick)
       },
       sendMessage(){
         this.message.nick = this.nick;
@@ -64,11 +67,14 @@
         this.cleanInput();
       },
       cleanInput(){
-        this.messages.message = '';
+        this.message.message = '';
       }
     },
     mounted(){
-
+        this.nick = this.$store.state.name;
+        if(this.nick){
+          this.nickB = true;
+        }
     },
     created(){
       this.socket = this.$socket('http://localhost:3000');
@@ -83,6 +89,9 @@
   height:  500px;
   width: 80%;
 
+}
+.rmWidth{
+  width: 80%;
 }
 label{
   color:rgb(233, 148, 58);
