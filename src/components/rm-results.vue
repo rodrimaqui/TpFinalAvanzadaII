@@ -1,10 +1,13 @@
 <template>
   <div>
+    </br>
+    <label>Since 1950 to 2017 </label>
     <b-form-input id="exampleInput1"
                   type="number" v-model="season"
                   placeholder='Please set the season'
     ></b-form-input>
     <br>
+    <label>The stage from 1 to 20 </label>
     <b-form-input id="exampleInput1"
                   type="number" v-model="stage"
                   placeholder='Please set the stage'
@@ -13,9 +16,13 @@
     <b-button type="submit" :disabled='!checkInPuts' variant="primary" @click='searchResults' >Search</b-button>
 
     <rm-spinner v-if='loading'></rm-spinner>
+    <div v-if='!error'>
     <div v-for='(r,index) in resultsArray'>
 
-      <b-card :title="r.position"
+      <b-card
+                bg-variant="dark"
+                text-variant="white"
+                :title="r.position"
                 :sub-title="r.driverSurename">
             <p class="card-text">
                 Laps: {{r.laps}}
@@ -26,6 +33,10 @@
            class="card-link">More Info of this</a></router-link>
         </b-card>
     </div>
+  </div>
+  <div v-else>
+    <label>SOME ARE WRONG</label>
+  </div>
   </div>
 </template>
 <script>
@@ -57,7 +68,8 @@
           grandPrix: '',
           season: '',
           stage: '',
-          loading: false
+          loading: false,
+          error:false
         }
       },
       computed:{
@@ -107,7 +119,7 @@
           })
           .catch((error) => {
             this.loading = false;
-            console.log(error);
+            this.error = true;
           })
         }
       },
@@ -117,4 +129,9 @@
     }
 </script>
 <style>
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 </style>

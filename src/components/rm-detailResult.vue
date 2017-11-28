@@ -1,8 +1,12 @@
 <template>
   <div>
       <rm-spinner v-if='loading'></rm-spinner>
-    <div v-for='result in results'>
-    <b-card :title="result.driverSurename"
+    <div v-if='!error'>
+    <div v-if='result'>
+    <b-card
+          bg-variant="dark"
+          text-variant="white"
+          :title="result.driverSurename"
           :img-src="img"
           img-alt="Image"
           img-top
@@ -38,6 +42,11 @@
 
     </p>
   </b-card>
+
+</div>
+</div>
+<div v-else>
+  <label>SOME ARE WRONG</label>
 </div>
 
   </div>
@@ -52,10 +61,11 @@
     },
     data(){
       return{
-        results:'',
+        result:'',
         img: '',
         name:'',
-        loading: false
+        loading: false,
+        error : false
       }
     },
     computed:{
@@ -78,11 +88,12 @@
           if(response.data.items[0].pagemap.cse_image){
           this.img = response.data.items[0].pagemap.cse_image[0].src;
         }
-          this.results = this.$store.getters.getOneResult(this.getSeason,this.getStage,this.getPosition);
+           const aux = this.$store.getters.getOneResult(this.getSeason,this.getStage,this.getPosition);
+          this.result = aux[0];
           this.loading = false
         })
         .catch((error) => {
-          console.log(error);
+          this.error = true;
           this.loading = false;
         });
       }

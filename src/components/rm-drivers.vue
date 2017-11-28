@@ -2,6 +2,9 @@
    <div>
      <b-row>
        <b-col>
+       </br>
+           <label>Since 1950 to 2017 </label>
+           <br>
      <b-form-input id="exampleInput1"
                    type="number" v-model="season"
                    placeholder='Please set the season'
@@ -13,10 +16,11 @@
     <rm-spinner v-if='loading'></rm-spinner>
     <b-row>
       <b-col>
+      <div v-if='!error'>
       <div v-for='d in drivers'>
 
           <b-card
-          :title="d.surename"
+          :title="d.surname"
           bg-variant="dark"
           :img-src="d.img"
           img-alt="Image"
@@ -25,7 +29,7 @@
           text-variant="white"
           class="mb-2">
           <p class="card-text">
-            {{d.surename}},{{d.name}}
+            {{d.surname}},{{d.name}}
             <br/>
             {{d.dateOfBirth}}
             <br/>
@@ -34,10 +38,15 @@
           </b-card>
           <br>
           </div>
-      </b-col>
 
+    </div>
 
+    <div v-else>
+      <label>SOME ARE WRONG</label>
+    </div>
+    </b-col>
     </b-row>
+
    </div>
 </template>
 <script>
@@ -53,12 +62,13 @@
         season: '',
         driver:{
           name:'',
-          surename:'',
+          surname:'',
           dateOfBirth:'',
           nationality:'',
           img: ''
         },
-        drivers:[]
+        drivers:[],
+        error : false
       }
     },
     computed:{
@@ -76,7 +86,7 @@
 
           aux.forEach((n) => {
             this.driver.name = n.givenName;
-            this.driver.surename = n.familyName;
+            this.driver.surname = n.familyName;
             this.driver.dateOfBirth = n.dateOfBirth;
             this.driver.nationality = n.nationality;
             this.drivers.push(Object.assign({},this.driver));
@@ -86,7 +96,7 @@
 
           for(let i = 0; i < this.drivers.length; i++){
 
-            let name = this.drivers[i].name+'_'+this.drivers[i].surename;
+            let name = this.drivers[i].name+'_'+this.drivers[i].surname;
 
             this.searchImg(name,i);
 
@@ -110,7 +120,7 @@
           }
         })
         .catch((error) => {
-          console.log(error);
+          this.error = true;;
         });
 
       }
@@ -121,5 +131,9 @@
   }
 </script>
 <style>
-
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 </style>

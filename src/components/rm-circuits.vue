@@ -1,41 +1,47 @@
 <template>
-   <div>
+  <div>
     <rm-spinner v-if='loading'></rm-spinner>
+    <div v-if='!error'>
     <b-row>
       <b-col>
-      <b-dropdown id="ddown-buttons" text="Circuits" class="m-2">
-        <div v-for='circuit in circuits'>
-          <b-dropdown-item-button @click='showCircuit(circuit.circuitName)'>{{circuit.circuitName}}</b-dropdown-item-button>
-        </div>
-      </b-dropdown>
-    </b-col>
+          <b-dropdown id="ddown-buttons" text="Circuits" class="m-2">
+            <div v-for='circuit in circuits'>
+              <b-dropdown-item-button @click='showCircuit(circuit.circuitName)'>{{circuit.circuitName}}</b-dropdown-item-button>
+            </div>
+          </b-dropdown>
+      </b-col>
     </b-row>
     <b-row>
       <b-col>
         <div v-if='circuit'>
-          <b-card border-variant="info"
-                  :img-src="img"
-                  img-alt="Image"
-                  img-top
-                   style="max-width: 40rem;"
-                  :header="circuit.raceName"
-                  header-tag="header"
-                  :title="circuit.circuitName">
-                  <p class="card-text">
-                    Country: {{circuit.Location.country}}
-                    <br/>
-                    City: {{circuit.Location.locality}}
-                    <br>
-                    Geographical Coordinates: Lat {{circuit.Location.lat}} Long {{circuit.Location.long}}
+          <b-card bg-variant="dark"
+                  text-variant="white"
+                    :img-src="img"
+                    img-alt="Image"
+                    img-top
+                     style="max-width: 40rem;"
+                    :header="circuit.raceName"
+                    header-tag="header"
+                    :title="circuit.circuitName">
+                    <p class="card-text">
+                      Country: {{circuit.Location.country}}
+                      <br/>
+                      City: {{circuit.Location.locality}}
+                      <br>
+                      Geographical Coordinates: Lat {{circuit.Location.lat}} Long {{circuit.Location.long}}
 
-                  </p>
-                  <b-button :href="circuit.url"
-                        variant="primary">More Info In wikipedia</b-button>
-          </b-card>
+                    </p>
+                    <b-button :href="circuit.url"
+                          variant="primary">More Info In wikipedia</b-button>
+              </b-card>
+          </div>
+        </b-col>
+      </b-row>
       </div>
-      </b-col>
-    </b-row>
-   </div>
+      <div v-else>
+        <label>SOME ARE WRONG</label>
+      </div>
+  </div>
 </template>
 <script>
   import rmSpinner from './rm-spinner.vue';
@@ -49,8 +55,8 @@
         loading: false,
         circuits: [],
         circuit:'',
-        img:''
-
+        img:'',
+        error : false
       }
     },
     methods:{
@@ -77,12 +83,12 @@
             this.circuit = this.circuits.find((n) => n.circuitName == name);
           }
         else{
-            this.circuit = this.circuits.find((n) => n.circuitName == circuitAux);
+            this.circuit = this.circuits.find((n) => n.circuitName == name);
           }
         })
         .catch((error) => {
           this.loading = false;
-          console.log(error);
+          this.error = true;
         });
       },
       showCircuit(circuitAux){
@@ -99,4 +105,5 @@
   }
 </script>
 <style>
+
 </style>

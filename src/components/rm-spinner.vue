@@ -39,6 +39,7 @@ overflow: hidden;
 width: 146px;
 height: 146px;
 border: 1px rgb(0,0,0) solid;
+background-color: white;
 position: absolute;
 left: 50%;
 top: 50%;

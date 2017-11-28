@@ -2,6 +2,8 @@
   <div class='aa'>
     <b-row>
       <b-col>
+        <br>
+        <label>Since 1950 to 2017 </label>
     <b-form-input id="exampleInput1"
                   type="number" v-model="season"
                   placeholder='Please set the season'
@@ -13,8 +15,11 @@
 <b-row>
   <rm-spinner v-if='loading'></rm-spinner>
   <b-col>
+    <div v-if='!error'>
     <label>Drivers</label>
     <b-card v-for='driver in drivers' :key='driver.id'
+          bg-variant="dark"
+          text-variant="white"
           :title="driver.Driver.familyName"
           tag="article"
           class="mb-2">
@@ -25,10 +30,16 @@
     </p>
 
   </b-card>
+</div>
+<div v-else>
+  <label>SOME ARE WRONG</label>
+</div>
   </b-col>
   <b-col>
     <label>Teams</label>
     <b-card v-for='team in teams' :key='team.id'
+          bg-variant="dark"
+          text-variant="white"
           :title="team.Constructor.name"
           tag="article"
           class="mb-2">
@@ -55,7 +66,8 @@
         season:'1988',
         stages: '',
         teams:[],
-        drivers:[]
+        drivers:[],
+        error:false
       }
     },
     computed:{
@@ -73,15 +85,20 @@
       getAllInformationApiStandings(){
         this.loading = true;
         this.teams = [];
+        this.drivers = [];
         this.$http.all([this.getDrivers(),this.getTeam()])
         .then(this.$http.spread((driver,team) => {
           this.drivers = driver.data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
           this.stages = driver.data.MRData.StandingsTable.StandingsLists[0].round;
-          this.teams = team.data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+          if(team){
+            this.teams = team.data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+          }
+
           this.loading = false;
         }))
         .catch((error) => {
           this.loading = false;
+          this.error = true;
           console.log(error);
         })
       }
@@ -91,5 +108,10 @@
   }
 </script>
 <style>
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 
 </style>

@@ -2,16 +2,20 @@
    <div>
      <b-row>
        <b-col>
+         <br>
+         <label>Since 1996 to 2017 </label>
          <b-form-input id="exampleInput1"
                        type="number" v-model="season"
                        placeholder='Please set the season'
          ></b-form-input>
-         <br>
+
+         <label>from 1 to 20</label>
          <b-form-input id="exampleInput1"
                        type="number" v-model="stage"
                        placeholder='Please set the stage'
          ></b-form-input>
-         <br/>
+
+         <label>from 1 to 70</label>
          <b-form-input id="exampleInput1"
                        type="number" v-model="lap"
                        placeholder='Please set the lap'
@@ -23,6 +27,7 @@
     <rm-spinner v-if='loading'></rm-spinner>
     <b-row>
       <b-col>
+        <div v-if='!error'>
         <label>Season {{season}} stage {{stage}} lap {{lap}}</label>
         <br>
         <label> {{circuit}} </label>
@@ -50,6 +55,10 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div v-else>
+      <label>SOME ARE WRONG</label>
+    </div>
       </b-col>
     </b-row>
    </div>
@@ -70,7 +79,8 @@
         circuit: '',
         date: '',
         time: '',
-        times: []
+        times: [],
+        error:false
       }
     },
     computed:{
@@ -96,6 +106,7 @@
           })
           .catch((error) => {
             this.loading = false;
+            this.error = true;
             console.log(error);
           })
         }
@@ -106,4 +117,9 @@
   }
 </script>
 <style>
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 </style>

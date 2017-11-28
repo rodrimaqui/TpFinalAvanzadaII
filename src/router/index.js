@@ -1,4 +1,5 @@
-import VueRouter from 'vue-router'
+import Vue from 'vue'
+import Router from 'vue-router'
 import rmSchedule from '../components/rm-schedule.vue';
 import rmQualifying from '../components/rm-qualifying.vue';
 import rmResults from '../components/rm-results.vue';
@@ -10,12 +11,12 @@ import rmDrivers from '../components/rm-drivers.vue';
 import rmStandings from '../components/rm-standings.vue';
 import rmDetailResult from '../components/rm-detailResult.vue';
 import rmAllNews from '../components/rm-allNews.vue';
+import rmChat from '../components/rm-chat.vue';
+Vue.use(Router)
 
-
-export default new VueRouter({
+export default new Router({
   routes: [
-
-    {path: '/schedule', component: rmSchedule},
+       {path: '/schedule', component: rmSchedule},
     {path: '/qualifying', component: rmQualifying},
     {path: '/standings', component: rmStandings},
     {path: '/f1Teams', component: rmF1Teams},
@@ -23,9 +24,9 @@ export default new VueRouter({
     {path: '/lapsTimes', component: rmLapsTimes},
     {path: '/pitStop', component: rmPitStop},
     {path: '/', component: rmAllNews},
+    {path: '/chat', component: rmChat},
     {path: '/results', component: rmResults},
     {path: '/drivers', component: rmDrivers},
     {path: '/results/:season/:stage/:position', component: rmDetailResult},
-
-	]
-});
+  ]
+})

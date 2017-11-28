@@ -1,32 +1,48 @@
 <template>
-    <div>
+    <div >
 
-        <b-form-input id="exampleInput1"
+    </br>
+        <label>Since 1950 to 2017</label>
+
+        <b-form-input  id="exampleInput1"
                       type="text" v-model="date"
                       placeholder='Please set the date'
         ></b-form-input>
+
         <br>
         <b-button type="submit" variant="primary" @click='search' :disabled="!dateOk" >Search</b-button>
-        <button type='submit' </button>
-                  <br>
-        <rm-spinner v-if='loading'></rm-spinner>
-        <div v-for='c in calendar'>
+        <br>
+        <rm-spinner v-if='loading' ></rm-spinner>
 
-          <b-card border-variant="info"
-                  :img-src="c.img"
-                  img-alt="Image"
-                  img-top
-                   style="max-width: 40rem;"
-                  :header="c.raceName"
-                  header-tag="header"
-                  :footer="c.locality"
-                  footer-tag="footer"
-                  :title="c.circuitName">
-                  <p class="card-text">The race was in {{c.date}}</p>
-                  <b-button :href="c.url"
-                        variant="primary">More Info In wikipedia</b-button>
-          </b-card>
+      <div v-if='!error'>
+
+        <div v-for='c in calendar'>
+           <transition name="bounce">
+              <b-card bg-variant="dark"
+                      text-variant="white"
+                      :img-src="c.img"
+                      img-alt="Image"
+                      img-top
+                       style="max-width: 40rem;"
+                      :header="c.raceName"
+                      header-tag="header"
+                      :footer="c.locality"
+                      footer-tag="footer"
+                      :title="c.circuitName">
+
+                      <p class="card-text">The race was in {{c.date}}</p>
+
+                      <b-button :href="c.url"
+                            variant="primary">More Info In wikipedia</b-button>
+              </b-card>
+            </transition>
         </div>
+      </div>
+      <div v-else>
+        <label>SOME ARE WRONG</label>
+      </div>
+
+
     </div>
 </template>
 <script>
@@ -49,12 +65,13 @@
         },
         date: '',
         calendar: [],
-        loading: false
+        loading: false,
+        error : false
       }
     },
     computed:{
       dateOk(){
-        return this.date >= 1950 && this.date <= 2017;
+        return true;//this.date >= 1950 && this.date <= 2017;
       }
     },
     methods:{
@@ -81,6 +98,7 @@
         }).catch((error) => {
           this.loading = false;
           console.log(error);
+          this.error = true;
         });
       },
 
@@ -90,17 +108,6 @@
         this.calendarObj.circuitName = '',
         this.calendarObj.url = '',
         this.calendarObj.img = ''
-      },
-
-      searchPhotografy(name){
-        this.$http.get("https://www.googleapis.com/customsearch/v1?key=AIzaSyCESbb8aksvTXgiGEaTZ4Ev9Mw2lOCpI40&cx=008826416416088798084:ria9zrnc1gk&q="+name)
-        .then((response) => {
-
-          this.calendarObj.img = response.data.items[0].pagemap.cse_image[0].src;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       }
     },
   mounted(){
@@ -110,4 +117,38 @@
 
 </script>
 <style>
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-out .5s;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes bounce-out {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 </style>

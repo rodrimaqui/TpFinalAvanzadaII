@@ -1,20 +1,23 @@
 <template>
   <div>
     <b-row>
-    <b-form-input id="exampleInput1"
+      <br>
+      <label>Since 2003 to 2017 </label>
+      <b-form-input id="exampleInput1"
                   type="number" v-model="season"
                   placeholder='Please set the season'
-    ></b-form-input>
-    <br>
-    <b-form-input id="exampleInput1"
+      ></b-form-input>
+     <label>From 0 to 20</label>
+     <b-form-input id="exampleInput1"
                   type="number" v-model="stage"
                   placeholder='Please set the stage'
-    ></b-form-input>
-    <br/>
+     ></b-form-input>
+     <br/>
     <b-button type="submit" :disabled='!checkInPuts' variant="primary" @click='search' >Search</b-button>
   </b-row>
     <rm-spinner v-if='loading'></rm-spinner>
   <b-row>
+    <div v-if='!error'>
     <div v-if='qualifying.length'>
     <table class="table table-dark">
       <thead>
@@ -35,6 +38,10 @@
       </tbody>
     </table>
   </div>
+</div>
+<div v-else>
+  <label>SOME ARE WRONG</label>
+</div>
 </b-row>
   </div>
 </template>
@@ -52,7 +59,8 @@
         stage:'',
         qualifying:[],
         raceName: '',
-        date: ''
+        date: '',
+        error:false
       }
     },
     computed:{
@@ -69,7 +77,7 @@
             this.loading = false;
           })
           .catch((error) => {
-            console.log(error);
+            this.error = true;
           });
       }
     },
@@ -79,4 +87,9 @@
   }
 </script>
 <style>
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 </style>

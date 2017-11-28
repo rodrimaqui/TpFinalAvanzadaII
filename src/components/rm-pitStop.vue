@@ -2,11 +2,12 @@
    <div>
      <b-row>
        <b-col>
+         <label>Since 2011 to 2017 </label>
          <b-form-input id="exampleInput1"
                        type="number" v-model="season"
                        placeholder='Please set the season'
          ></b-form-input>
-         <br>
+        <label>from 1 to 20</label>
          <b-form-input id="exampleInput1"
                        type="number" v-model="stage"
                        placeholder='Please set the stage'
@@ -18,6 +19,7 @@
     <rm-spinner v-if='loading'></rm-spinner>
     <b-row>
       <b-col>
+        <div v-if='!error'>
         <label>Season {{season}} stage {{stage}}</label>
         <br>
         <label> {{circuit}} </label>
@@ -49,6 +51,10 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div v-else>
+        <label>SOME ARE WRONG</label>
+      </div>
       </b-col>
     </b-row>
    </div>
@@ -68,12 +74,13 @@
         circuit: '',
         date: '',
         time: '',
-        pitStop: []
+        pitStop: [],
+        error: false
       }
     },
     computed:{
       checkInPuts(){
-       return this.season >= 1996 && this.season <= 2017 && this.stage > 0 && this.stage < 21;
+       return this.season >= 2011 && this.season <= 2017 && this.stage > 0 && this.stage < 21;
       }
     },
     methods:{
@@ -94,7 +101,7 @@
         })
         .catch((error) => {
           this.loading = false;
-          console.log(error);
+          this.error = true;
         })
       }
     },
@@ -104,4 +111,9 @@
   }
 </script>
 <style>
+label{
+  color:rgb(233, 148, 58);
+  font-style:italic;
+  font-weight: bold;
+}
 </style>
